@@ -4,8 +4,8 @@
 
 const int DHT_PIN = 15; 
 DHTesp dht;
-const char* ssid = "Wokwi-GUEST";  // Nome da rede Wi-Fi
-const char* password = "";  // Senha da rede Wi-Fi
+const char* ssid = "Wokwi-GUEST";  // Nome da rede Wi-Fi do Wokiwi
+const char* password = "";  // Sem senha para que o Wokiwi entenda que ira usar seu simulador
 const char* mqtt_server = "test.mosquitto.org";  // Broker MQTT alternativo
 const int mqtt_port = 1883;  // Porta padrão MQTT sem SSL
 
@@ -67,8 +67,8 @@ void reconnect() {
 
     if (client.connect(clientId.c_str())) {
       Serial.println("Connected");
-      client.publish("/ThinkIOT/Publish", "Welcome");
-      client.subscribe("/ThinkIOT/Subscribe");
+      client.publish("/Markame/Publish", "Welcome");
+      client.subscribe("/Markame/Subscribe");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -99,9 +99,9 @@ void loop() {
     TempAndHumidity data = dht.getTempAndHumidity();
 
     String temp = String(data.temperature, 2);
-    client.publish("/Markame/temp", temp.c_str());  // Publica a temperatura no tópico
+    client.publish("/Markame/temp", temp.c_str());  // Publica a temperatura no tópico, troque Markame pelo seu Nome ou nickname de seu jogo favorito :-)
     String hum = String(data.humidity, 1);
-    client.publish("/Markame/hum", hum.c_str());  // Publica a umidade no tópico
+    client.publish("/Markame/hum", hum.c_str());  // Publica a umidade no tópico, troque Markame pelo seu Nome ou nickname de seu jogo favorito :-)
 
     Serial.print("Temperature: ");
     Serial.println(temp);
